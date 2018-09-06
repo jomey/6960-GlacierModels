@@ -13,8 +13,8 @@ class Glacier(object):
 
     def __init__(self, length, isostatic=False):
         self._length = length
-        self._midpoint = self._length / 2
-        self._isostatic = isostatic
+        self._midpoint = self.length / 2
+        self.isostatic = isostatic
 
     @property
     def length(self):
