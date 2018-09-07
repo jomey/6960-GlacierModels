@@ -47,7 +47,7 @@ class Glacier(object):
 if __name__ == '__main__':
     resolution = 100
     glacier_length = 100000
-    x = np.arange(start=0, stop=glacier_length, step=resolution)
+    x = np.arange(start=0, stop=glacier_length + 1, step=resolution)
 
     glacier = Glacier(length=glacier_length)
     y = [glacier.height(value) for value in x]
