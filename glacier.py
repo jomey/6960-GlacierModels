@@ -46,7 +46,7 @@ class Glacier(object):
         height = self.ICE_CONSTANT * x
 
         if self.isostatic:
-            height = height / (1 + self.isostacy())
+            height = height * (1 + self.isostacy())
 
         return height ** (1 / 2)
 
