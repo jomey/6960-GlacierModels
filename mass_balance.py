@@ -33,22 +33,15 @@ class Glacier(object):
         self._isostatic = value
 
     def height(self, x):
-        if x <= self.midpoint:
-            x = self.lower_bound(x)
-        else:
-            x = self.upper_bound(x)
+        if x >= self.midpoint:
+            x = self.length - x
+
+        height = self.ICE_CONSTANT * x
 
         if self.isostatic:
-            x = x / (1 + self.ISOSTASY)
+            height = height / (1 + self.ISOSTASY)
 
-        return x ** (1/2)
-
-    @staticmethod
-    def lower_bound(x):
-        return Glacier.ICE_CONSTANT * x
-
-    def upper_bound(self, x):
-        return self.ICE_CONSTANT * (self.length - x)
+        return height ** (1/2)
 
 
 if __name__ == '__main__':
