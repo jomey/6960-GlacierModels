@@ -9,7 +9,7 @@ class Glacier(object):
     GRAVITY = 10
     SHEER_STRESS = 0.5e5
 
-    ICE_CONSTANT = (2 * SHEER_STRESS)/(ICE_DENSITY * GRAVITY)
+    ICE_CONSTANT = (2 * SHEER_STRESS) / (ICE_DENSITY * GRAVITY)
 
     def __init__(self, length, **kwargs):
         self._length = length
@@ -42,7 +42,7 @@ class Glacier(object):
         self._mantel_density = value
 
     def isostacy(self):
-        return self.ICE_DENSITY/(self.ICE_DENSITY - self.mantel_density)
+        return self.ICE_DENSITY / (self.ICE_DENSITY - self.mantel_density)
 
     def surface_height(self, x):
         if x >= self.midpoint:
@@ -53,7 +53,7 @@ class Glacier(object):
         if self.isostatic:
             height = height / (1 + self.isostacy())
 
-        return height ** (1/2)
+        return height ** (1 / 2)
 
     def bed_depth(self, y):
         return y * self.isostacy()
@@ -72,7 +72,7 @@ if __name__ == '__main__':
         (3270, dict(linestyle='dashed', color='blue')),
     ])
 
-    plt.figure(figsize=(15,8))
+    plt.figure(figsize=(15, 8))
 
     for density, line_style in densities.items():
         glacier.mantel_density = density
