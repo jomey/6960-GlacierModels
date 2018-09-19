@@ -6,8 +6,8 @@ class Glacier(object):
 
     ICE_CONSTANT = (2 * SHEER_STRESS) / (ICE_DENSITY * GRAVITY)
 
-    def __init__(self, length, **kwargs):
-        self._length = length
+    def __init__(self, **kwargs):
+        self._length = kwargs.get('length', 0)
         self._midpoint = self.length / 2
         self.mantel_density = kwargs.get('mantel_density', self.MANTEL_DENSITY)
         self.isostatic = kwargs.get('isostatic', False)
