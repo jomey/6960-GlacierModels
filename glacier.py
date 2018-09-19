@@ -1,8 +1,8 @@
 class Glacier(object):
-    ICE_DENSITY = 920       # kg/m^3
+    ICE_DENSITY = 920       # Rho in kg/m^3
     MANTEL_DENSITY = 3200   # kg/m^3
     GRAVITY = 10
-    SHEER_STRESS = 0.5e5
+    SHEER_STRESS = 0.5e5    # Tau in Pascal
 
     ICE_CONSTANT = (2 * SHEER_STRESS) / (ICE_DENSITY * GRAVITY)
 
