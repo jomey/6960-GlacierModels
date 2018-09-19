@@ -8,6 +8,7 @@ class Glacier(object):
 
     def __init__(self, **kwargs):
         self._length = kwargs.get('length', 0)
+        self._height = kwargs.get('height', 0)
         self._midpoint = self.length / 2
         self.mantel_density = kwargs.get('mantel_density', self.MANTEL_DENSITY)
         self.isostatic = kwargs.get('isostatic', False)
@@ -19,6 +20,14 @@ class Glacier(object):
     @property
     def midpoint(self):
         return self._midpoint
+
+    @property
+    def height(self):
+        return self._height
+
+    @height.setter
+    def height(self, value):
+        self._height = value
 
     @property
     def isostatic(self):
