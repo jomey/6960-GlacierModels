@@ -61,3 +61,13 @@ class Glacier(object):
 
     def bed_depth(self, y):
         return y * self.isostacy()
+
+    def linear_equilibrium_length(self, elevation, slope):
+        """
+        Equation 2.1.7
+        Assumes linear relationship between thickness and length
+        """
+        return (2/slope) * (
+            (self.SHEER_STRESS/(self.ICE_DENSITY * self.GRAVITY * slope))
+            + self.height - elevation
+             )
