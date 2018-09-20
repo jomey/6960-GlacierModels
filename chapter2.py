@@ -4,22 +4,22 @@ import numpy as np
 from glacier import Glacier
 
 if __name__ == '__main__':
-    elevations = np.arange(4000, 5100, 100)
+    ela_elevations = np.arange(4000, 5100, 100)
     slopes = np.arange(0.05, 0.30, 0.05)
 
-    glacier = Glacier(height=5500)
+    glacier = Glacier(max_bed_height=5500)
 
     fig, (ax1, ax2) = plt.subplots(2, 1, sharex='col', figsize=(14,10))
 
     for slope in slopes:
         lengths = [
             glacier.linear_equilibrium_length(elevation, slope)
-            for elevation in elevations
+            for elevation in ela_elevations
         ]
 
-        ax1.plot(lengths, elevations, label=slope.round(2))
+        ax1.plot(lengths, ela_elevations, label=slope.round(2))
 
-    for elevation in elevations:
+    for elevation in ela_elevations:
         lengths = [
             glacier.linear_equilibrium_length(elevation, slope)
             for slope in slopes

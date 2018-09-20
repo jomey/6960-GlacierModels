@@ -8,7 +8,7 @@ class Glacier(object):
 
     def __init__(self, **kwargs):
         self._length = kwargs.get('length', 0)
-        self._height = kwargs.get('height', 0)
+        self._max_bed_height = kwargs.get('max_bed_height', 0)
         self._midpoint = self.length / 2
         self.mantel_density = kwargs.get('mantel_density', self.MANTEL_DENSITY)
         self.isostatic = kwargs.get('isostatic', False)
@@ -22,12 +22,12 @@ class Glacier(object):
         return self._midpoint
 
     @property
-    def height(self):
-        return self._height
+    def max_bed_height(self):
+        return self._max_bed_height
 
-    @height.setter
-    def height(self, value):
-        self._height = value
+    @max_bed_height.setter
+    def max_bed_height(self, value):
+        self._max_bed_height = value
 
     @property
     def isostatic(self):
@@ -62,12 +62,12 @@ class Glacier(object):
     def bed_depth(self, y):
         return y * self.isostacy()
 
-    def linear_equilibrium_length(self, elevation, slope):
+    def linear_equilibrium_length(self, ela_elevation, slope):
         """
         Equation 2.1.7
         Assumes linear relationship between thickness and length
         """
-        return (2/slope) * (
-            (self.SHEER_STRESS/(self.ICE_DENSITY * self.GRAVITY * slope))
-            + self.height - elevation
-             )
+        return (2 / slope) * (
+                (self.SHEER_STRESS / (self.ICE_DENSITY * self.GRAVITY * slope))
+                + self.max_bed_height - ela_elevation
+        )
