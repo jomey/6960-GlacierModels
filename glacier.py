@@ -71,3 +71,18 @@ class Glacier(object):
                 (self.SHEER_STRESS / (self.ICE_DENSITY * self.GRAVITY * slope))
                 + self.max_bed_height - ela_elevation
         )
+
+    def length_change(self, ela_change, slope):
+        """
+        Equation 2.1.8
+        """
+        return -(2 / slope) * ela_change
+
+    def fractional_length_change(self, ela_elevation, ela_change, slope):
+        """
+        Equation 2.1.9
+        """
+        return -1 / (
+                (self.SHEER_STRESS / (self.ICE_DENSITY * self.GRAVITY * slope))
+                + self.max_bed_height - ela_elevation
+        ) * ela_change
