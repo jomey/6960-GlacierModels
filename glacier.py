@@ -3,6 +3,8 @@ class Glacier(object):
     MANTEL_DENSITY = 3200   # kg/m^3
     GRAVITY = 10
     SHEER_STRESS = 0.5e5    # Tau in Pascal
+    ALPHA = 3               # m/2
+    NU = 10
 
     ICE_CONSTANT = (2 * SHEER_STRESS) / (ICE_DENSITY * GRAVITY)
 
@@ -87,3 +89,18 @@ class Glacier(object):
                 (self.SHEER_STRESS / (self.ICE_DENSITY * self.GRAVITY * slope))
                 + self.max_bed_height - ela_elevation
         ) * ela_change
+
+    def mean_thickness(self, slope):
+        """
+        Equation 2.3.1
+        """
+        return (self.ALPHA * self.length ** .5) / (1 + self.NU * slope)
+
+    def critical_ela(self, slope):
+        """
+        Equation 2.3.6
+        """
+        return (
+                   self.ALPHA ** 2 /
+                   (2 * slope * (1 + self.NU * slope) ** 2)
+               ) + self.max_bed_height
