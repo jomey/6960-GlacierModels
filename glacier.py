@@ -72,7 +72,8 @@ class Glacier(object):
                 + self.max_bed_height - ela_elevation
         )
 
-    def length_change(self, ela_change, slope):
+    @staticmethod
+    def length_change(ela_change, slope):
         """
         Equation 2.1.8
         """
