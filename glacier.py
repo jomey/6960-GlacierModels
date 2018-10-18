@@ -12,12 +12,25 @@ class Glacier(object):
         self._length = kwargs.get('length', 0)
         self._max_bed_height = kwargs.get('max_bed_height', 0)
         self._midpoint = self.length / 2
+        self._slope = kwargs.get('slope', 0)
         self.mantel_density = kwargs.get('mantel_density', self.MANTEL_DENSITY)
         self.isostatic = kwargs.get('isostatic', False)
 
     @property
     def length(self):
         return self._length
+
+    @length.setter
+    def length(self, value):
+        self._length = value
+
+    @property
+    def slope(self):
+        return self._slope
+
+    @slope.setter
+    def slope(self, value):
+        self._slope = value
 
     @property
     def midpoint(self):
