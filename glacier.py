@@ -77,15 +77,20 @@ class Glacier(object):
     def bed_depth(self, y):
         return y * self.isostacy()
 
-    def linear_equilibrium_length(self, ela_elevation, slope):
+    """
+    ############
+    ## Length ##
+    ############
+    """
+
+    def linear_equilibrium_length(self, ela_elevation, **kwargs):
         """
         Equation 2.1.7
         Assumes linear relationship between thickness and length
         """
-        return (2 / slope) * (
-                (self.SHEER_STRESS / (self.ICE_DENSITY * self.GRAVITY * slope))
-                + self.max_bed_height - ela_elevation
-        )
+        thickness = kwargs.get('thickness', self.static_mean_thickness())
+        return (2 / self.slope) * thickness + \
+            self.max_bed_height - ela_elevation
 
     @staticmethod
     def length_change(ela_change, slope):
@@ -103,17 +108,42 @@ class Glacier(object):
                 + self.max_bed_height - ela_elevation
         ) * ela_change
 
-    def mean_thickness(self, slope):
+    """
+    ###############
+    ## Thickness ##
+    ###############
+    """
+
+    def static_mean_thickness(self):
+        """
+        Integral from equation 2.2.1
+        """
+        return self.SHEER_STRESS / \
+            (self.ICE_DENSITY * self.GRAVITY * self.slope)
+
+    def mean_thickness(self):
         """
         Equation 2.3.1
         """
-        return (self.ALPHA * self.length ** .5) / (1 + self.NU * slope)
+        return (self.ALPHA * self.length ** .5) / (1 + self.NU * self.slope)
 
-    def critical_ela(self, slope):
+    """
+    ###########
+    ##  ELA  ##
+    ###########
+    """
+
+    def ela_from_length(self):
+        """
+        Derived for ela_elevation from 2.1.7
+        """
+        return self.static_mean_thickness() + \
+            self.max_bed_height - (self.length * self.slope / 2)
+
+    def critical_ela(self):
         """
         Equation 2.3.6
         """
-        return (
-                   self.ALPHA ** 2 /
-                   (2 * slope * (1 + self.NU * slope) ** 2)
-               ) + self.max_bed_height
+        return (self.ALPHA ** 2 /
+            (2 * self.slope * (1 + self.NU * self.slope) ** 2)) + \
+            self.max_bed_height

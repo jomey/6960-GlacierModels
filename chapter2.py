@@ -16,8 +16,9 @@ if __name__ == '__main__':
 
     # Length change with varying ELA
     for slope in slopes:
+        glacier.slope = slope
         length_change = [
-            glacier.linear_equilibrium_length(elevation, slope)
+            glacier.linear_equilibrium_length(elevation)
             for elevation in ela_elevations
         ]
         ax1.plot(ela_elevations, length_change, label=slope.round(2))
@@ -46,10 +47,10 @@ if __name__ == '__main__':
 
     # Change of length over varying slope
     for ela_elevation in ela_elevations:
-        lengths = [
-            glacier.linear_equilibrium_length(ela_elevation, slope)
-            for slope in slopes
-        ]
+        lengths = []
+        for slope in slopes:
+            glacier.slope = slope
+            lengths.append(glacier.linear_equilibrium_length(ela_elevation))
         ax2.plot(slopes, lengths, label=ela_elevation)
     ax2.set_title('Length change with varying slope')
     ax2.legend(title='ELA elevation')
