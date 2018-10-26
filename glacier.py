@@ -5,6 +5,7 @@ class Glacier(object):
     SHEER_STRESS = 0.5e5    # Tau in Pascal
     ALPHA = 3               # m/2
     NU = 10
+    BALANCE_RATE = 0.007    # m/yr
 
     ICE_CONSTANT = (2 * SHEER_STRESS) / (ICE_DENSITY * GRAVITY)
 
@@ -108,6 +109,14 @@ class Glacier(object):
                 + self.max_bed_height - ela_elevation
         ) * ela_change
 
+    def length_over_time(self, delta_time, ela):
+        """
+        Equation 3.2.6 after solving the integral
+        """
+        return (2 / 3) * (1 + self.NU * self.slope) / self.ALPHA \
+            * self.mass_balance(ela) * self.length ** -0.5 * delta_time \
+            + self.length
+
     """
     ###############
     ## Thickness ##
@@ -147,3 +156,19 @@ class Glacier(object):
         return (self.ALPHA ** 2 /
             (2 * self.slope * (1 + self.NU * self.slope) ** 2)) + \
             self.max_bed_height
+
+    """
+    ####################
+    ##  Mass Balance  ##
+    ####################
+    """
+
+    def mass_balance(self, ela):
+        """
+        Equation 3.2.7
+        """
+        return -0.5 * self.BALANCE_RATE * self.slope * self.length**2 \
+            + self.BALANCE_RATE * self.length * (
+            self.ALPHA / (1 + self.NU * self.slope) * self.length**.5
+            + self.max_bed_height - ela
+        )
