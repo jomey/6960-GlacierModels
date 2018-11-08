@@ -169,6 +169,5 @@ class Glacier(object):
         """
         return -0.5 * self.BALANCE_RATE * self.slope * self.length**2 \
             + self.BALANCE_RATE * self.length * (
-            self.ALPHA / (1 + self.NU * self.slope) * self.length**.5
-            + self.max_bed_height - ela
-        )
+                self.mean_thickness() + self.max_bed_height - ela
+            )
